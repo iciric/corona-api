@@ -1,8 +1,8 @@
 from flask import Blueprint, request
 
-from config import DAILY_REPORTS_URL
-from enums import CSV
-from utils import get_current_date, get_csv_url_by_date, get_country_statistics_by_column
+from config.constants import DAILY_REPORTS_URL
+from enums.csv import CSV
+from api.utils import get_current_date, get_csv_url_by_date, get_country_statistics_by_column
 
 import pandas as pd
 

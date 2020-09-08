@@ -1,5 +1,5 @@
-from config import DAILY_REPORTS_URL, TOP_N_STATISTIC
-from enums import CSV
+from config.constants import DAILY_REPORTS_URL, TOP_N_STATISTIC
+from enums.csv import CSV
 from datetime import datetime, timedelta
 
 '''
