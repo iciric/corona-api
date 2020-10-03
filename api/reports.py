@@ -1,28 +1,29 @@
 from flask import Blueprint, request
 
-from config.constants import DAILY_REPORTS_URL
-from enums.csv import CSV
+from api.constants import DAILY_REPORTS_URL
+from api.enums import CSV
 from api.utils import get_current_date, get_csv_url_by_date, get_country_statistics_by_column
 
 import pandas as pd
 
+
 reports_api = Blueprint('reports_api', __name__)
 
-'''
-Returns current total statistic for provided country. 
 
-Request example: localhost:5000/api/reports/country?country=US
-
-Response example:
-{
-    "active_cases": 3771412, 
-    "confirmed_cases": 6276365, 
-    "death_cases": 188941
-}
-'''
 @reports_api.route('/api/reports/country', methods=['GET'])
 def daily_report():
+    """
+    Returns current total statistic for provided country. 
 
+    Request example: localhost:5000/api/reports/country?country=US
+
+    Response example:
+    {
+        "active_cases": 3771412, 
+        "confirmed_cases": 6276365, 
+        "death_cases": 188941
+    }
+    """
     request_params = request.args.to_dict()
     country = request_params.get('country')
     date = get_current_date()
@@ -42,19 +43,19 @@ def daily_report():
 
     return response
 
-'''
-Returns top N countries by confirmed cases.
 
-Request: localhost:5000/api/reports/confirmed
-
-Response example:
-{
-    'confirmed_cases': [('US', 50), ('India', 15), ...]
-}
-'''
 @reports_api.route('/api/reports/confirmed', methods=['GET'])
 def report_confirmed():
+    """
+    Returns top N countries by confirmed cases.
 
+    Request: localhost:5000/api/reports/confirmed
+
+    Response example:
+    {
+        'confirmed_cases': [('US', 50), ('India', 15), ...]
+    }
+    """
     date = get_current_date()
     url = get_csv_url_by_date(date)
     df = pd.read_csv(url, usecols=[CSV.COUNTRY, CSV.CONFIRMED])
@@ -67,19 +68,19 @@ def report_confirmed():
 
     return response
 
-'''
-Returns top N countries by active cases.
 
-Request: localhost:5000/api/reports/active
-
-Response example:
-{
-    'active_cases': [('Brasil', 50), ('Croatia', 15), ...]
-}
-'''
 @reports_api.route('/api/reports/active', methods=['GET'])
 def report_active():
+    """
+    Returns top N countries by active cases.
 
+    Request: localhost:5000/api/reports/active
+
+    Response example:
+    {
+        'active_cases': [('Brasil', 50), ('Croatia', 15), ...]
+    }
+    """
     date = get_current_date()
     url = get_csv_url_by_date(date)
     df = pd.read_csv(url, usecols=[CSV.COUNTRY, CSV.ACTIVE])
@@ -92,19 +93,18 @@ def report_active():
 
     return response
 
-'''
-Returns top N countries by deaths cases.
-
-Request: localhost:5000/api/reports/deaths
-
-Response example:
-{
-    'deaths_cases': [('UK', 50), ('Pakistan', 15), ...]
-}
-'''
 @reports_api.route('/api/reports/deaths', methods=['GET'])
 def report_deaths():
+    """
+    Returns top N countries by deaths cases.
 
+    Request: localhost:5000/api/reports/deaths
+
+    Response example:
+    {
+        'deaths_cases': [('UK', 50), ('Pakistan', 15), ...]
+    }
+    """
     date = get_current_date()
     url = get_csv_url_by_date(date)
     df = pd.read_csv(url, usecols=[CSV.COUNTRY, CSV.DEATHS])

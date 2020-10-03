@@ -3,6 +3,7 @@ This project is about creating a small API microservice which provides relevant 
 Technologies used:
  - Python 3
  - Flask 
+ - pytest-flask
  - Pandas 
  - Docker
 
